@@ -1,0 +1,146 @@
+#Password Check
+
+import random
+
+class Password_manager:
+    def __init__(self):
+        self.old_passwords=[]
+        
+    def get_password(self):
+        return self.old_passwords[-1]
+    def set_password(self,new_password):
+        if new_password not in self.old_passwords:
+            self.old_passwords.append(new_password)
+    def is_correct(self,new_password):
+        return new_password==self.old_passwords[-1]
+        
+
+#Power Calculation
+
+class Power:
+    def __init__(self, a=0, b=0, c=0):
+        self.a = a
+        self.b = b
+        self.c = c
+
+    def find_power(self):
+        if (self.a != 0 and self.b != 0 and self.c != 0):
+            return (self.a ** (self.b ** self.c))
+        elif(self.a != 0 and self.b != 0 and self.c == 0):
+            return (self.a ** self.b)
+        elif (self.a != 0 and self.b == 0 and self.c == 0):
+            return self.a
+        elif (self.a == 0 and self.b == 0 and self.c == 0):
+            return 0
+
+result = Power(5, 2)
+print(result.find_power())
+
+
+
+#Player Wicket Program
+
+class WicketOutException(Exception):
+    def __init__(self,message):
+        self.message=message
+        
+
+class OutException(Exception):
+    def __init__(self,message):
+        self.message=message
+        
+
+class Match:
+    def __init__(self,p1,p2):
+        self.player1=p1
+        self.player2=p2
+        
+    def findWinner(self):
+        count_player1=0
+        count_player2=0
+        for i in range(len(p1)-2):
+            if(p1[i]%2==0 & p1[i+1]%2==0 & p1[i+2]%2==0):
+                count_player1+=1
+                i+=1
+        for j in range(len(p2)-2):
+            if(p2[j]%2==0 & p2[j+1]%2==0 & p2[j+2]%2==0):
+                count_player2+=1
+                j+=1
+        
+        if count_player1==count_player2:
+            print ('ALL OUT')
+        elif count_player1>count_player2:
+            print ('Player 1')
+        elif count_player1<count_player2:
+            print ('Player 1 out')
+
+
+        
+
+p1=[2,2,2,6,2]
+p2=[2,2,4,1,2]
+
+
+d = Match(p1, p2)
+try :
+    d.findWinner()
+except Exception as e:
+    print(e.message)
+    
+    
+#Decorators
+
+def log_message(func):
+    def wrap(args,*kwargs):
+        res = func(args,*kwargs)
+        with open('/tmp/decorator_logs.txt','wt') as f:
+            f.write(res)
+        return res
+    return wrap
+    
+@log_message
+def a_function_that_returns_a_string():
+    return "A string"
+
+@log_message
+def a_function_that_returns_a_string_with_newline(s):
+    return "{}\n".format(s)
+
+@log_message
+def a_function_that_returns_another_string(string=""):
+    return "Another string"
+    
+a_function_that_returns_a_string()
+a_function_that_returns_a_string_with_newline("Newline String")
+a_function_that_returns_another_string(string="Another String")
+
+
+
+#Oracle
+#not Reports to Nancy Edwards
+
+select employeeid from employee
+where reportsto is null or
+reportsto != (select employeeid from employee
+                     where firstname='Nancy' and lastname='Edwards')
+                     and firstname !='Nancy'and lastname!='Edwards'
+                     order by employeeid;
+                     
+
+
+#Not Reports to Manager
+
+select employeeid,reportsto from Employee where title!='General Manager' and title!='Sales Manager' and title!='IT Manager';
+
+
+
+#Track and Genreid
+
+select Track.trackId as trackid,Genre.GenreId as genreid, 
+case
+when Track.GenreId=Genre.GenreId then 1 
+else 0 end as included
+
+from Track cross join Genre
+
+order by trackid,genreid;
